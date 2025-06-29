@@ -26,9 +26,7 @@
       position: absolute;
       bottom: 0;
       left: 60px;
-      background: url('foto-kamu.png') no-repeat center / cover;
-      border-radius: 10px;
-      box-shadow: 0 0 10px #689f38;
+      background: url('foto-kamu.png') no-repeat center / contain;
       z-index: 3;
     }
 
@@ -40,6 +38,7 @@
       right: -60px;
       background: url('logo-upn.png') no-repeat center / contain;
       animation: moveObs 2s linear infinite;
+      z-index: 2;
     }
 
     @keyframes moveObs {
@@ -71,8 +70,8 @@
     }
 
     .grow-upn {
-      animation: growUPN 1s ease-in-out forwards;
-      z-index: 5;
+      animation: growUPN 1.2s ease-in-out forwards;
+      z-index: 9;
     }
 
     @keyframes growUPN {
@@ -80,31 +79,17 @@
       100% { width: 300px; height: 300px; }
     }
 
-    .run-away {
-      animation: shake-run 2s ease-out forwards;
+    .run-backward {
+      animation: kaburBelakang 2s ease-in-out forwards;
+      z-index: 4;
     }
 
-    @keyframes shake-run {
-      0% {
-        transform: translateX(0px) rotate(0deg);
-        left: 60px;
-      }
-      20% {
-        transform: translateX(2px) rotate(-5deg);
-      }
-      40% {
-        transform: translateX(-2px) rotate(5deg);
-      }
-      60% {
-        transform: translateX(2px) rotate(-5deg);
-      }
-      80% {
-        transform: translateX(-2px) rotate(5deg);
-      }
-      100% {
-        left: 120vw;
-        transform: rotate(0deg);
-      }
+    @keyframes kaburBelakang {
+      0%   { left: 60px; transform: rotate(0deg); }
+      25%  { transform: rotate(-10deg); }
+      50%  { transform: rotate(10deg); }
+      75%  { transform: rotate(-5deg); }
+      100% { left: -150px; transform: rotate(0deg); }
     }
   </style>
 </head>
@@ -152,12 +137,11 @@
       obsLeft > charLeft && obsLeft < charLeft + 60 &&
       charTop < 50
     ) {
-      // Stop everything
       obstacle.classList.add("grow-upn");
       obstacle.style.animation = "none";
+      character.classList.add("run-backward");
       bgMusic.pause();
       belaNegara.play();
-      character.classList.add("run-away");
       gameOver.style.display = "block";
       document.removeEventListener("keydown", jump);
       clearInterval(checkCollision);
